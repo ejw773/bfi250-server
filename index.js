@@ -11,15 +11,18 @@ const { User } = require('./models');
 const { Status } = require('./models');
 
 // Get
+// Test GET
 app.get('/', (req, res) => {
   res.send('Hello World!')
 });
 
+// GET everything from status table
 app.get('/status', urlencodedParser, async (req, res) => {
   const status = await Status.findAll();
   res.json(status);
 });
 
+// GET a particular user's status record
 app.get('/status/:userid', urlencodedParser, async (req, res) => {
   console.log(req.params);
   const status = await Status.findAll({
@@ -31,6 +34,7 @@ app.get('/status/:userid', urlencodedParser, async (req, res) => {
 })
 
 // Post
+// POST a new user
 app.post('/users', urlencodedParser, async (req, res) => {
   console.log(req.body);
   const { name, email } = req.body;
@@ -43,6 +47,7 @@ app.post('/users', urlencodedParser, async (req, res) => {
   })
 });
 
+// POST a new status
 app.post('/status', jsonParser, async (req, res) => {
   console.log(req.body);
   const { userID, imdbID, status } = req.body;
@@ -58,7 +63,8 @@ app.post('/status', jsonParser, async (req, res) => {
   })
 });
 
-// Delete
+// DELETE
+// Delete a status for a particular user's particular film
 app.delete('/delete/:userID/:imdbID', async (req, res) => {
   console.log(req.params);
   const { userID, imdbID } = req.params;
